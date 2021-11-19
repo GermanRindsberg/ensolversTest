@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<br><br><br>
+<br><br><br>
+<div class="container-fluid text-center">
+<div class="row">
+
+    <div class="col border border-5 mb-3 rounder-3 mx-5">
+        <h2><b> Folders </b></h2>
+        <h5>Select a folder</h5>
+        <table class="table bg-light">
+
+            <thead class="thead">
+                <tr>
+                    <th>Folder name</th>
+                    <th>View items</th>
+                    <th>Remove folder</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <div class="container">
+                    {% for folder in folders %}
+                    <tr>
+                        <td>{{folder.name}}</td>
+                        <td> <a href="/items/{{folder.id}}">View Items</a></td>
+                        <td>
+                            <a onclick="return confirm('Are you sure you want to delete this folder?')"
+                                href="/destroyFolder/{{folder.id}}">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </div>
+            </tbody>
+
+        </table>
+
+        <div class="row  text-center bg-info border   ">
+            <form class="col my-3" method="POST" action="/newFolder">
+                <input class="mb-2" type="text" name="folderName" placeholder="New Folder">
+                <button class="btn btn-primary mx-2" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div class="col border border-5 mb-3 rounder-3 mx-5">
+        <h2><b> Folder {{folderName.name}}</b></h2>
+        <h5>To-Do List</h5>
+
+        <table class="table bg-light">
+
+            <thead class="thead">
+                <tr>
+                    <th>Finished</th>
+                    <th>Task</th>
+                    <th>Edit</th>
+                    <th>Remove Task</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <div class="container">
+                    {% for item in items %}
+
+                    <tr>
+                        <td>
+                            <form action="/finished/{{item.id}}" method="POST">
+                                {% if item.finished == 1 %}
+                                <input class="form-check-input-warning" onchange="this.form.submit()" type="checkbox"
+                                    role="switch" value="1" checked>
+                                {% else %}
+                                <input class="form-check-input-warning" onchange="this.form.submit()" type="checkbox"
+                                    role="switch" value="0" unchecked>
+                                {% endif %}
+                            </form>
+                        </td>
+
+                        <td>
+                            {{item.name}}
+                        </td>
+
+                        <td>
+                            {% include 'modalTask.html' %}
+                            <a data-bs-whatever="{{item.name}}" data-task_id={{item.id}} data-bs-toggle="modal" data-bs-target="#modalTask" href="">Edit</a>
+                        </td>
+
+                        
+                        </td>
+
+                        <td>
+                            <a onclick="return confirm('Are you sure you want to delete this Task?')"
+                                href="/destroyTask/{{item.id}}">Remove</a>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                </div>
+
+
+            </tbody>
+
+
+
+        </table>
+
+        <div class="row text-center bg-info border">
+            <form class="col my-3 " method="POST" action="/newTask/{{folderName.id}}">
+                <input class="mb-2" type="text" name="taskName" placeholder="New Task">
+                <button class="btn btn-primary mx-2" type="submit">Add</button>
+            </form>
+        </div>
+    
+    </div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+{% endblock %}

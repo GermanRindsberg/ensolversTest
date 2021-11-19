@@ -1,0 +1,26 @@
+{%extends '/base.html'%}
+{%block content%}
+
+<div class="container mt-5 pt-4 ">
+    <form action="/reg" method="POST">
+        <div class="mb-3">
+          <label for="inputName" class="form-label">Name</label>
+          <input type="text" name="txtName" class="form-control" id="inputName" aria-describedby="emailHelp">
+          
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" name="txtEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+          
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" name="txtPass" class="form-control" id="exampleInputPassword1">
+        </div>
+       
+        <button type="submit" class="btn btn-primary border ">Submit</button>
+        <a href="/" class="btn btn-secondary border">Cancel</a>
+      </form>
+</div>
+
+{% endblock %}
